@@ -48,22 +48,22 @@ void MovieStat::setMax(int max) {
 	this->max = max;
 }
 
-void MovieStat::setMax(vector<int> movieArr)
+void MovieStat::setMax(const int * movieArr, const int SIZE)
 {
 	//THIS FUNCTION WILL SET THE MAX VARIABLE VALUE
 	//DEPENDING ON THE LARGEST VALUE OF THE ELEMENT
 	//IN THE ARRAY
-	for (int i = 0; i < movieArr.size(); i++)
+	for (int i = 0; i < SIZE; i++)
 	{
-		for (int j = 0; j < movieArr.size(); j++)
+		for (int j = 0; j < SIZE; j++)
 		{
-			if (movieArr.at(i) > movieArr.at(j) && movieArr.at(i) > max)
+			if (movieArr[i] > movieArr[j] && movieArr[i] > max)
 			{
-				setMax(movieArr.at(i));
+				setMax(movieArr[i]);
 			}
-			else if (movieArr.at(i) < movieArr.at(j) && movieArr.at(j) > max)
+			else if (movieArr[i] < movieArr[j] && movieArr[j] > max)
 			{
-				setMax(movieArr.at(j));
+				setMax(movieArr[j]);
 			}
 		}
 	}
@@ -96,24 +96,33 @@ void MovieStat::questionA()
 void MovieStat::questionBandC(const int SIZE)
 {
 	//FOR DYNAMIC ALLOCATION	
-	vector<int> movieArr;
+	//vector<int> movieArr;
+
+	int * movieArr = new int[SIZE];
+
+	/*for (size_t i = 0; i < SIZE; i++)
+	{
+		cout << "For student " << i + 1 << ": ";
+		inputValidation('B', input);
+		movieArr.push_back(getInput());
+	}*/
 
 	for (size_t i = 0; i < SIZE; i++)
 	{
 		cout << "For student " << i + 1 << ": ";
 		inputValidation('B', input);
-		movieArr.push_back(getInput());
+		movieArr[i] = getInput();
 	}
 
 	cout << endl;
-	displayVector(movieArr);
-	cout << endl << endl << "The average of the array is: " << getAverage(movieArr.size()) << endl << endl;
-	cout << "The median of the array is: " << getMedian(movieArr) << endl;
-	setMax(movieArr);
-	displayMode(movieArr); cout << endl;
+	displayVector(movieArr, SIZE);
+	cout << endl << endl << "The average of the array is: " << getAverage(SIZE) << endl << endl;
+	cout << "The median of the array is: " << getMedian(movieArr, SIZE) << endl;
+	setMax(movieArr, SIZE);
+	displayMode(movieArr, SIZE); cout << endl;
 
-	movieArr.clear();
-	movieArr.resize(0);
+	//movieArr.clear();
+	//movieArr.resize(0);
 }
 
 void MovieStat::inputValidation(char caseChar, int& input)
@@ -142,7 +151,8 @@ void MovieStat::inputValidation(char caseChar, int& input)
 	} while (input <= 0);
 }
 
-void MovieStat::displayVector(vector<int> movieArr)
+//void MovieStat::displayVector(vector<int> movieArr)
+void MovieStat::displayVector(const int* movieArr , const int SIZE)
 {
 	//THIS FUNCTION DISPLAY THE VALUES IN THE ARRAY
 
@@ -150,10 +160,10 @@ void MovieStat::displayVector(vector<int> movieArr)
 					//THE SUM OF THE ARRAY
 
 	cout << "Your array of inputs are: ";
-	for (int i = 0; i < movieArr.size(); i++)
+	for (int i = 0; i < SIZE; i++)
 	{
-		cout << movieArr.at(i) << " ";
-		sum += movieArr.at(i);
+		cout << movieArr[i] << " ";
+		sum += movieArr[i];
 	}
 
 	setSum(sum);
@@ -165,46 +175,47 @@ double MovieStat::getAverage(int SIZE) const
 	return ((double)getSum() / (double)SIZE);
 }
 
-double MovieStat::getMedian(vector<int> movieArr) const
+//double MovieStat::getMedian(vector<int> movieArr) const
+double MovieStat::getMedian(const int * movieArr, const int SIZE) const
 {
 	//THIS FUNCTION WILL GET THE MEDIAN IN THE ARRAY
 	double result;
-	int medianSize = movieArr.size() / 2;
+	int medianSize = SIZE / 2;
 
-	if (movieArr.size() % 2 == 0)
+	if (SIZE % 2 == 0)
 	{
 		//IF THE SIZE OF THE ARRAY IS EVEN. GET THE TWO MIDDLE VALUES
 		//AND COMPUTE THE AVERAGE
-		result = (double)(movieArr.at(medianSize) + movieArr.at(medianSize - 1)) / 2;
+		result = (double)(movieArr[medianSize] + movieArr[medianSize - 1] / 2);
 	}
-	else if (movieArr.size() % 2 == 1)
+	else if (SIZE % 2 == 1)
 	{
 		//ELSE, JUST GET THE MIDDLE ELEMENT
-		result = movieArr.at(medianSize);
+		result = movieArr[medianSize];
 	}
 
 	return result;
 }
 
-void MovieStat::displayMode(vector<int> movieArr)
+void MovieStat::displayMode(const int* movieArr, const int SIZE)
 {
 	//THIS FUNCTION WILL LOOK FOR AND DISPLAY THE MODE IN THE ARRAY
 	vector<int> tempMovieArr(getMax(), 0);
 
 	int counter = 0;
 
-	for (int i = 0; i < movieArr.size(); i++)
+	for (int i = 0; i < SIZE; i++)
 	{
-		for (int j = 0; j < movieArr.size(); j++)
+		for (int j = 0; j < SIZE; j++)
 		{
-			if (movieArr.at(i) == movieArr.at(j))
+			if (movieArr[i] == movieArr[j])
 			{
 				counter++;
 			}
 		}
-		if (!ifExists(tempMovieArr, movieArr.at(i) - 1))
+		if (!ifExists(tempMovieArr, movieArr[i] - 1))
 		{
-			tempMovieArr.at(movieArr.at(i) - 1) = counter;
+			tempMovieArr.at(movieArr[i] - 1) = counter;
 		}
 		counter = 0;
 	}

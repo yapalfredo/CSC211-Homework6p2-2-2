@@ -19,14 +19,14 @@ public:
 	//GETTERS
 	int getInput() const;	//GETS INPUT
 	double getAverage(int) const;	// CALCULATES ANR RETURNS THE AVERAGE
-	double getMedian(vector<int>) const;	//CALCULATES MEDIAN
+	double getMedian(const int *, const int) const;	//CALCULATES MEDIAN
 	int getSum() const;		//GETS SUM OF THE ARRAY
 	int getMax() const;		//GETS LARGEST VALUE IN THE ARRAY
 
 	//SETTERS
 	void setInput(int);		//SETS INPUT FROM USER
 	void setSum(int);		//SETS SUM VALUE OF ARRAY
-	void setMax(vector<int>);	//SETS LARGEST VALUE IN THE ARRAY
+	void setMax(const int *, const int);	//SETS LARGEST VALUE IN THE ARRAY
 	void setMax(int);			//SETMAX OVERLOADING
 
 
@@ -50,10 +50,10 @@ public:
 	void loadScreen();
 
 	//DISPLAYS ALL THE ELEMENTS IN THE ARRAY
-	void displayVector(vector<int>);
+	void displayVector(const int *, const int);
 
 	//DISPLAYS THE MODE IN THE ARRAY
-	void displayMode(vector<int>);
+	void displayMode(const int *, const int);
 
 	//A FUNCTION FOR CHECKING THE TEMP ARRAY IF A VALUE
 	//HAS ALREADY BEEN COUNTED
