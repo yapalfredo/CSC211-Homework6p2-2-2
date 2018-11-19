@@ -115,6 +115,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MovieStat.cpp" />
+    <ClCompile Include="MovieTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MovieStat.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
