@@ -4,10 +4,13 @@ int main()
 {
 
 	MovieStat mv;
+	ofstream outFile;
 
 	try
 	{
-		mv.loadScreen();
+		outFile.open("Homework6p2-2-2.txt");
+		mv.loadScreen(outFile);
+		outFile.close();
 	}
 	catch (const std::exception& e)
 	{

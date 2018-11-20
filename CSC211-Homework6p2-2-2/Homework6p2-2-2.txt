@@ -1,0 +1,20 @@
+How many students were surveyed?: 5
+
+For student 1: Please enter the number of movies: 1
+For student 2: Please enter the number of movies: 1
+For student 3: Please enter the number of movies: 1
+For student 4: Please enter the number of movies: 2
+For student 5: Please enter the number of movies: 7
+
+Your array of inputs are: 1 1 1 2 7 
+
+The average of the array is: 2.4
+
+The median of the array is: 1
+
+1 occured 3 times 
+2 occured 1 time 
+7 occured 1 time 
+
+The mode(s) is/are: 
+1    

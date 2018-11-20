@@ -75,70 +75,75 @@ int MovieStat::getMax() const
 	return max;
 }
 
-void MovieStat::loadScreen()
+void MovieStat::loadScreen(ofstream& outFile)
 {
 	//CALLS questionA()
-	questionA();
+	questionA(outFile);
 }
 
-void MovieStat::questionA()
+void MovieStat::questionA(ofstream& outFile)
 {
 	//FUNCTION CALLS INPUT VALIDATION
-	inputValidation('A', input);
+	outFile.seekp(outFile.tellp());
+	inputValidation('A', input, outFile);
 
 	setInput(input);
 	const int SIZE = getInput();
 
 	cout << endl;
-	questionBandC(SIZE);
+	questionBandC(SIZE, outFile);
 }
 
-void MovieStat::questionBandC(const int SIZE)
+void MovieStat::questionBandC(const int SIZE, ofstream& outFile)
 {
+	const char * c1 = "The average of the array is: ";
+	const char * c2 = "The median of the array is: ";
 	//FOR DYNAMIC ALLOCATION	
-	//vector<int> movieArr;
-
 	int * movieArr = new int[SIZE];
-
-	/*for (size_t i = 0; i < SIZE; i++)
-	{
-		cout << "For student " << i + 1 << ": ";
-		inputValidation('B', input);
-		movieArr.push_back(getInput());
-	}*/
 
 	for (size_t i = 0; i < SIZE; i++)
 	{
+		outFile.seekp(outFile.tellp());
 		cout << "For student " << i + 1 << ": ";
-		inputValidation('B', input);
+		outFile << "For student " << i + 1 << ": ";
+		inputValidation('B', input, outFile);
 		movieArr[i] = getInput();
 	}
 
 	cout << endl;
-	displayVector(movieArr, SIZE);
-	cout << endl << endl << "The average of the array is: " << getAverage(SIZE) << endl << endl;
-	cout << "The median of the array is: " << getMedian(movieArr, SIZE) << endl;
-	setMax(movieArr, SIZE);
-	displayMode(movieArr, SIZE); cout << endl;
+	displayArray(movieArr, SIZE, outFile);
 
-	//movieArr.clear();
-	//movieArr.resize(0);
+	outFile.seekp(outFile.tellp());
+	cout << endl << endl << c1 << getAverage(SIZE) << endl << endl;
+	outFile << endl << endl << c1 << getAverage(SIZE) << endl << endl;
+	cout << c2 << getMedian(movieArr, SIZE) << endl;
+	outFile << c2 << getMedian(movieArr, SIZE) << endl;
+	setMax(movieArr, SIZE);
+	displayMode(movieArr, SIZE, outFile); cout << endl;
+
+	delete movieArr;
+	movieArr = nullptr;
 }
 
-void MovieStat::inputValidation(char caseChar, int& input)
+void MovieStat::inputValidation(char caseChar, int& input, ofstream& outFile)
 {
 	//THIS FUNCTION VALIDATIONS THE INPUT
 	//IT WILL ONLY ACCEPT INPUTS GREATER THAN OR EQUAL TO ZERO
+
+	const char * c1 = "How many students were surveyed?: ";
+	const char * c2 = "Please enter the number of movies: ";
 	do {
 		switch (caseChar)
 		{
 		case 'A':	//QUESTION A
-			cout << "How many students were surveyed?: ";
+			cout << c1;
 			cin >> input;
+			outFile << c1 << input << endl << endl;
 			break;
 		case 'B':
-			cout << "Please enter the number of movies: ";
+			cout << c2;
 			cin >> input;
+			outFile << c2 << input << endl;
 			break;
 		default:
 			break;
@@ -152,17 +157,20 @@ void MovieStat::inputValidation(char caseChar, int& input)
 }
 
 //void MovieStat::displayVector(vector<int> movieArr)
-void MovieStat::displayVector(const int* movieArr , const int SIZE)
+void MovieStat::displayArray(const int* movieArr , const int SIZE, ofstream& outFile)
 {
+	const char * c1 = "Your array of inputs are: ";
 	//THIS FUNCTION DISPLAY THE VALUES IN THE ARRAY
 
 	int sum = 0;	//THIS VARIABLE WILL HOLD
 					//THE SUM OF THE ARRAY
-
-	cout << "Your array of inputs are: ";
+	outFile.seekp(outFile.tellp());
+	cout << c1;
+	outFile << endl << c1;
 	for (int i = 0; i < SIZE; i++)
 	{
 		cout << movieArr[i] << " ";
+		outFile << movieArr[i] << " ";
 		sum += movieArr[i];
 	}
 
@@ -197,8 +205,14 @@ double MovieStat::getMedian(const int * movieArr, const int SIZE) const
 	return result;
 }
 
-void MovieStat::displayMode(const int* movieArr, const int SIZE)
+void MovieStat::displayMode(const int* movieArr, const int SIZE, ofstream& outFile)
 {
+	const char * c1 = " occured ";
+	const char * c2 = " times ";
+	const char * c3 = " time ";
+	const char * c4 = "The mode(s) is/are: ";
+
+	outFile.seekp(outFile.tellp());
 	//THIS FUNCTION WILL LOOK FOR AND DISPLAY THE MODE IN THE ARRAY
 	vector<int> tempMovieArr(getMax(), 0);
 
@@ -219,28 +233,31 @@ void MovieStat::displayMode(const int* movieArr, const int SIZE)
 		}
 		counter = 0;
 	}
-	cout << endl;
+	cout << endl; outFile << endl;
 	//////////////////////////////////////////////////////////////
 	//DISPLAY THE OCCURENCE OF EACH GENERATED VALUE IN THE ARRAY
 	for (int i = 0; i < tempMovieArr.size(); i++)
 	{
 		if (tempMovieArr.at(i) > 0)
 		{
-			cout << i + 1 << " occured " << tempMovieArr.at(i);
-
+			cout << i + 1 << c1 << tempMovieArr.at(i);
+			outFile << i + 1 << c1 << tempMovieArr.at(i);
 			if (tempMovieArr.at(i) > 1)
 			{
-				cout << " times" << endl;
+				cout << c2 << endl;
+				outFile << c2 << endl;
 			}
 			else
 			{
-				cout << " time " << endl;
+				cout << c3 << endl;
+				outFile << c3 << endl;
 			}
 		}
 	}
 	//////////////////////////////////////////////////////////////
 	//SET MODE(S)
-	cout << endl << "The mode(s) is/are: " << endl;
+	cout << endl << c4 << endl;
+	outFile << endl << c4 << endl;
 	bool greaterOrEqual;
 	for (int i = 0; i < tempMovieArr.size(); i++)
 	{
@@ -259,6 +276,7 @@ void MovieStat::displayMode(const int* movieArr, const int SIZE)
 		if (tempMovieArr.at(i) > 1) //WILL ONLY DISPLAY OCCURENCE GREATER THAN 1
 		{
 			cout << i + 1 << "    ";
+			outFile << i + 1 << "    ";
 		}
 	}
 	////////////////////////////////////////////////////////////////

@@ -1,8 +1,8 @@
 #pragma once
-#pragma once
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -33,27 +33,27 @@ public:
 	//ASK THE USER HOW MANY STUDENTS WERE SURVEYED.
 	//AN ARRAY OF INTEGERS WITH THIS MANY ELEMENTS
 	//SHOULD THEN BE DYNAMICALLY ALLOCATED.
-	void questionA();
+	void questionA(ofstream&);
 
 
 	//ALLOW THE USER TO ENTER THE NUMBER OF MOVIES
 	//EACH STUDENT SAW INTO THE ARRAY.
 	//CALCULATE AND DISPLAY THE AVERAGE, MEDIAN, AND
 	//MODE OF THE VALUES ENTERED.
-	void questionBandC(const int);
+	void questionBandC(const int, ofstream&);
 
 	//INPUT VALIDATION
-	void inputValidation(char, int&);
+	void inputValidation(char, int&, ofstream&);
 
 	//DOES NOTHING ALMOST
 	//ONLY TO LOAD THE FIRST QUESTION
-	void loadScreen();
+	void loadScreen(ofstream&);
 
 	//DISPLAYS ALL THE ELEMENTS IN THE ARRAY
-	void displayVector(const int *, const int);
+	void displayArray(const int *, const int, ofstream&);
 
 	//DISPLAYS THE MODE IN THE ARRAY
-	void displayMode(const int *, const int);
+	void displayMode(const int *, const int, ofstream&);
 
 	//A FUNCTION FOR CHECKING THE TEMP ARRAY IF A VALUE
 	//HAS ALREADY BEEN COUNTED
