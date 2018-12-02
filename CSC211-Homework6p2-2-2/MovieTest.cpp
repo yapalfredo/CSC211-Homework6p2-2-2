@@ -12,9 +12,9 @@ int main()
 		mv.loadScreen(outFile);
 		outFile.close();
 	}
-	catch (const std::exception& e)
+	catch (exception& e)
 	{
-		//cout << e.what();
+		//DO NOTHING
 	}
 
 	system("Pause");
